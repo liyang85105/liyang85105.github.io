@@ -110,7 +110,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/gitub-hexo-博客/" style="font-size: 10px;">gitub hexo 博客</a>
+						<a href="/tags/c-11/" style="font-size: 10px;">c++11</a> <a href="/tags/gitub-hexo-博客/" style="font-size: 10px;">gitub hexo 博客</a>
 					</div>
 				</section>
 				
@@ -179,6 +179,65 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-cpp11-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/10/18/cpp11-overview/" class="article-date">
+  	<time datetime="2015-10-18T13:45:14.000Z" itemprop="datePublished">2015-10-18</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/10/18/cpp11-overview/">c++11-overview</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>C++11标准为C++编程语言的第三个官方标准，正式名叫ISO/IEC 14882:2011 - Information technology – Programming languages – C++ 。在正式标准发布前，原名C++0x。它将取代C++标准第二版ISO/IEC 14882:2003 - Programming languages – C++ 成为C++语言新标准。<br>C++11包含了核心语言的新机能，并且拓展C++标准程序库，并且加入了大部分的C++ Technical Report 1程序库(数学上的特殊函数除外)。C++ 标准委员会计划在2010年8月之前完成对最终委员会草案的投票，以及于2011年3月3召开的标准会议完成国际标准的最终草案。最终于2011年8月12日公布，并于2011年9月出版。2012年2月28日的国际标准草案(N3376)是最接近于现行标准的草案(编辑上的修正)。此次标准为13年第一次重大修正。<br><em>ISO将在2014年和2017年发布C++的后续版本。</em><br><strong>c++11 makes c++ a totally new programming language</strong></p>
+<h2 id="核心语言的变化">核心语言的变化</h2><h3 id="auto关键字">auto关键字</h3><p>以前要定义一个复杂的数据结构（嵌套的stl容器），并获取它的一个迭代器，代码简直是噩梦一样的。<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt; <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; container;</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt; <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt;::const_iteartor iter = container.begin();</span><br></pre></td></tr></table></figure></p>
+<p>而现在只需要<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt; <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt; container;</span><br><span class="line"><span class="keyword">auto</span> iter = container.cbegin();</span><br></pre></td></tr></table></figure></p>
+<h3 id="vector的move构造/初始化/遍历">vector的move构造/初始化/遍历</h3><p>之前遍历一个vector要这么写：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foreach</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt;&amp; matrix)</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &gt;::const_iterator iter = matrix.begin();</span><br><span class="line">    <span class="keyword">for</span> (; iter != matrix.end(); ++iter) &#123;</span><br><span class="line">        <span class="comment">// use iter to do something</span></span><br><span class="line">        <span class="comment">// like iter-&gt;doSomething();</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>而现在只需要这样：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foreach</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix)</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> i : matrix) &#123;</span><br><span class="line">        <span class="comment">// use i to do something</span></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="标准库的变化">标准库的变化</h2><h2 id="运行时的变化">运行时的变化</h2>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c-11/">c++11</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
   
     <article id="post-test-hexo" class="article article-type-post" itemscope itemprop="blogPost">
   
